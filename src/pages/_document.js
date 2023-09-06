@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
+      <script src="https://kit.fontawesome.com/b880553563.js" crossorigin="anonymous"></script>
       <body>
         <Main />
         <NextScript />
