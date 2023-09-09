@@ -1,13 +1,24 @@
-import foodSchema from "../../../../public/models/Food.js";
+import foodSchema from "../../../models/Food.js";
 import dbConnect from "../../../../server/db";
 
 export default async function handler(req, res) {
   await dbConnect();
 
   if (req.method === "GET") {
-    const foodSelections = await foodSchema.find({}); //{ name: { $ne: "" } },{ name: true },{ limit: 10, sort: { name: "asc" } }
+    const { query } = req.query;
 
-    res.status(200).json({ foodSelections });
+    try {
+      // Perform a case-insensitive search for food items matching the query
+      const foodSelections = await foodSchema
+        .find({
+          name: { $regex: new RegExp(query, "i") }, // Case-insensitive search
+        })
+        .limit(10); // Limit the results to a reasonable number
+
+      res.status(200).json({ foodSelections });
+    } catch (error) {
+      res.status(500).json({ error: "An error occurred while fetching data" });
+    }
   } else if (req.method === "POST") {
     const newFoodSchema = new foodSchema(req.body);
     await newFoodSchema.save();
