@@ -28,7 +28,31 @@ html {
   justify-content: center;
   text-align: center;
   font-size: 64px;
-  background-color: orange;
+
+  background-image: url("../icons/coffee.svg");
+  background-position: 0% 100%;
+  background-size: 500%;
+  background-repeat: repeat-x;
+  animation: rise .8s ease-out forwards, 
+  slide 5s linear infinite;
+}
+
+@keyframes rise {
+  0% {
+      background-position-y: 200%;
+  }
+  100% {
+      background-position-y: 100%;
+  }
+}
+
+@keyframes slide{
+  from {
+    background-position-x: 0%;/*Moved horizontally 600 px for better start*/
+  }
+  to {
+      background-position-x: 125%; /*Image size is 1600px, added 600 on for loop*/
+  }
 }
 
 .sunrise {
@@ -38,10 +62,6 @@ html {
   width: 64px;
   background-size:contain;
   background-repeat: no-repeat;
-}
-
-.daily-calories {
-  
 }
 
 .meal-row {

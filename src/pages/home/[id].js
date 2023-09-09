@@ -36,8 +36,8 @@ export default function Home() {
 
     useEffect(() => {
         setCalorieCounter(breakfastCalories + lunchCalories + dinnerCalories + snackCalories) 
-        changeColor(); 
-    }, [breakfastCalories, lunchCalories, dinnerCalories, snackCalories])
+        changeColor();
+    }, [breakfastCalories, lunchCalories, dinnerCalories, snackCalories, calorieCounter])
 
     function changeColor() {
         if (calorieCounter > 0 && calorieCounter <= 200){
@@ -83,7 +83,7 @@ export default function Home() {
         else if (meal === "Dinner"){
           setDinnerCalories(dinnerCalories + addedCalories);
         }
-        else if (meal === "Snack"){
+        else {
           setSnackCalories(snackCalories + addedCalories);
         }
       }
