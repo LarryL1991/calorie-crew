@@ -7,10 +7,14 @@ export default function Home() {
     
     
     const [calorieCounter, setCalorieCounter] = useState(0);
+    const [addedCalories, setAddedCalories] = useState(0);
+
     const [morningCalories, setMorningCalories] = useState(0);
     const [lunchCalories, setLunchCalories] = useState(0);
     const [dinnerCalories, setDinnerCalories] = useState(0);
     const [snackCalories, setSnackCalories] = useState(0);
+
+    const [meal, setMeal] = useState('Snack');
 
     const [color, setColor] = useState('black');
     const [popup, setPopup] = useState('hidden');
@@ -18,15 +22,15 @@ export default function Home() {
     const options = ['Breakfast', 'Lunch', 'Dinner', 'Snack']
 
     useEffect(() => {
-        setCalorieCounter(morningCalories + lunchCalories + dinnerCalories + snackCalories)
-        changeColor();
+        setCalorieCounter(morningCalories + lunchCalories + dinnerCalories + snackCalories) 
+        changeColor(); 
     }, [morningCalories, lunchCalories, dinnerCalories, snackCalories])
 
     function changeColor() {
-        if (calorieCounter > 0 && calorieCounter < 200){
+        if (calorieCounter > 0 && calorieCounter <= 200){
             setColor("green");
         }
-        else if (calorieCounter > 800 && calorieCounter < 2000){
+        else if (calorieCounter >= 800 && calorieCounter < 2000){
             setColor("yellow");
         }
         else if (calorieCounter >= 2000){
@@ -38,11 +42,22 @@ export default function Home() {
     const [open, setOpen] = useState(false);
 
     const handleClose = () => {
+        console.log(addedCalories);
         setOpen(false);
       };
       const handleOpen = () => {
         setOpen(true);
       };
+
+      function handleMealChange(event, value) {
+        setMeal(value);
+        console.log(value);
+      }
+
+      function handleCalorieAdd(event, value) {
+        setAddedCalories(event.target.value);
+        console.log(event.target.value);
+      }
 
 
     return (
@@ -51,24 +66,26 @@ export default function Home() {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add Calories</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
+          <DialogContentText sx={{marginBottom: "10px"}}>
+            What meal was this for?
           </DialogContentText>
           <Autocomplete
             id="combo-box-demo"
             options={options}
-            autocomplete="off"
+            onChange={(handleMealChange)}
             renderInput={(params) => <TextField {...params} label="Meal" />}
+            onKeyDown={(e) => {e.preventDefault();}}
     />
           <TextField
             autoFocus
             margin="dense"
             id="calories"
             label="calories"
-            type="numeric"
+            type="number"
             fullWidth
             variant="standard"
+            autoComplete="off"
+            onInput={handleCalorieAdd}
           />
         </DialogContent>
         <DialogActions>
