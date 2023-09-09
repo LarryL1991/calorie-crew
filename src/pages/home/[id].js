@@ -4,12 +4,25 @@ import { useEffect, useState } from "react"
 
 
 export default function Home() {
+
+  const [data, setData] = useState('');
+
+  async function fetchData() {
+    const response = await fetch("/api/home")
+    setData(await response.json());
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [])
+
+  console.log(data);
     
     
     const [calorieCounter, setCalorieCounter] = useState(0);
     const [addedCalories, setAddedCalories] = useState(0);
 
-    const [morningCalories, setMorningCalories] = useState(0);
+    const [breakfastCalories, setBreakfastCalories] = useState(0);
     const [lunchCalories, setLunchCalories] = useState(0);
     const [dinnerCalories, setDinnerCalories] = useState(0);
     const [snackCalories, setSnackCalories] = useState(0);
@@ -22,9 +35,9 @@ export default function Home() {
     const options = ['Breakfast', 'Lunch', 'Dinner', 'Snack']
 
     useEffect(() => {
-        setCalorieCounter(morningCalories + lunchCalories + dinnerCalories + snackCalories) 
+        setCalorieCounter(breakfastCalories + lunchCalories + dinnerCalories + snackCalories) 
         changeColor(); 
-    }, [morningCalories, lunchCalories, dinnerCalories, snackCalories])
+    }, [breakfastCalories, lunchCalories, dinnerCalories, snackCalories])
 
     function changeColor() {
         if (calorieCounter > 0 && calorieCounter <= 200){
@@ -43,6 +56,7 @@ export default function Home() {
 
     const handleClose = () => {
         console.log(addedCalories);
+        handleCalorieInput;
         setOpen(false);
       };
       const handleOpen = () => {
@@ -54,11 +68,25 @@ export default function Home() {
         console.log(value);
       }
 
-      function handleCalorieAdd(event, value) {
-        setAddedCalories(event.target.value);
+      function handleCalorieInput(event, value) {
+        setAddedCalories(Number(event.target.value));
         console.log(event.target.value);
       }
 
+      function addCalories () {
+        if (meal === "Breakfast"){
+          setBreakfastCalories(breakfastCalories + addedCalories);
+        }
+        else if (meal === "Lunch"){
+          setLunchCalories(lunchCalories + addedCalories);
+        }
+        else if (meal === "Dinner"){
+          setDinnerCalories(dinnerCalories + addedCalories);
+        }
+        else if (meal === "Snack"){
+          setSnackCalories(snackCalories + addedCalories);
+        }
+      }
 
     return (
     <>
@@ -85,12 +113,12 @@ export default function Home() {
             fullWidth
             variant="standard"
             autoComplete="off"
-            onInput={handleCalorieAdd}
+            onInput={handleCalorieInput}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Add Calories</Button>
+          <Button type="submit" onClick={addCalories}>Add Calories</Button>
         </DialogActions>
       </Dialog>
     </div>
@@ -99,10 +127,10 @@ export default function Home() {
         {calorieCounter}
         </div>
         <div className="meal-row">
-            <div className="meal-icon" onClick={(e) => setMorningCalories(morningCalories + 100) }>
+            <div className="meal-icon" onClick={(e) => setBreakfastCalories(breakfastCalories + 100) }>
                 <div className="prevent-click">
                     <i className="sunrise" ></i>
-                    <div className="daily-calories">{morningCalories}</div>
+                    <div className="daily-calories">{breakfastCalories}</div>
                 </div>
             </div>
             <div className="meal-icon" onClick={() => setLunchCalories(lunchCalories + 100)}>
