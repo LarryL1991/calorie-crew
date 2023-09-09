@@ -1,4 +1,4 @@
-import foodSchema from "../../../../public/models/Food.js";
+import foodSchema from "../../../models/Food.js";
 import dbConnect from "../../../../server/db";
 
 export default async function foodById(req, res) {
