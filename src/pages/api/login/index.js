@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     const users = await User.find(
       { username: { $ne: "" } },
-      { username: true, email: true, password: true, dfj: true },
+      { username: true, email: true, password: true},
       { limit: 10, sort: { name: "asc" } }
     );
 

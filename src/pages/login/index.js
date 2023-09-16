@@ -48,7 +48,7 @@ export default function Login() {
             <Stack>
                 <TextField label="Username" id="username" type='text' className='login-field' value={user} onChange={(e) => setUser(e.target.value)}/>
                 <TextField label="Password" id="password" type='password'className='login-field' value={pass} onChange={(e) => setPass(e.target.value)}/>
-                <Button onClick={handleClick} sx="margin-bottom: 5vh" type='submit'>Submit</Button> {/*Why does this "sx" here error in the console? Seems like it's working fine...*/}
+                <Button onClick={handleClick}  type='submit'>Submit</Button> {/*Why does this "sx" here error in the console? Seems like it's working fine...*/}
 
                 <div className="register-help">
                     <p>Not a member?</p>
