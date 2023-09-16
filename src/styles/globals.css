@@ -19,27 +19,40 @@ html {
   text-align: center;
 }
 
+.pot {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
+
 .calorie-counter {
   margin: auto;
-  width:fit-content;
-  margin-top: 30vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width:100%;
   text-align: center;
   font-size: 64px;
+  padding-top: 5vh;
+}
 
-  background-image: url("../icons/coffee.svg");
+.liquid {
+  position: absolute;
+  width: 150px;
+  height: 162px;
+  padding-top: 38px;
+
+  background-image: url("../../public/icons/coffee.svg");
   background-position: 0% 100%;
   background-size: 500%;
   background-repeat: repeat-x;
   animation: rise .8s ease-out forwards, 
   slide 5s linear infinite;
+  opacity: 100%;
+  z-index: -1;
 }
 
 @keyframes rise {
   0% {
-      background-position-y: 200%;
+      background-position-y: 500%;
   }
   100% {
       background-position-y: 100%;
@@ -48,15 +61,15 @@ html {
 
 @keyframes slide{
   from {
-    background-position-x: 0%;/*Moved horizontally 600 px for better start*/
+    background-position-x: 0%;
   }
   to {
-      background-position-x: 125%; /*Image size is 1600px, added 600 on for loop*/
+      background-position-x: 125%; 
   }
 }
 
 .sunrise {
-  background: url('../icons/sunrise.svg');
+  background: url('../../public/icons/sunrise.svg');
   display: inline-block;
   height: 64px;
   width: 64px;

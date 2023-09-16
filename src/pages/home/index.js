@@ -17,7 +17,7 @@ export default function Home() {
     const [meal, setMeal] = useState('Snack');
 
     const [color, setColor] = useState('black');
-    const [popup, setPopup] = useState('hidden');
+    const [calorieGoal, setCalorieGoal] = useState(2000);
 
     const options = ['Breakfast', 'Lunch', 'Dinner', 'Snack']
 
@@ -27,13 +27,13 @@ export default function Home() {
     }, [morningCalories, lunchCalories, dinnerCalories, snackCalories])
 
     function changeColor() {
-        if (calorieCounter > 0 && calorieCounter <= 200){
+        if (calorieCounter > 0 && calorieCounter <= calorieGoal / 3){
             setColor("green");
         }
-        else if (calorieCounter >= 800 && calorieCounter < 2000){
+        else if (calorieCounter >= calorieGoal / 3 && calorieCounter < calorieGoal){
             setColor("yellow");
         }
-        else if (calorieCounter >= 2000){
+        else if (calorieCounter >= calorieGoal){
             setColor("red");
         }
 
@@ -124,7 +124,6 @@ export default function Home() {
                 </div>
             </div>
         </div>
-        
     </>
     )
 }

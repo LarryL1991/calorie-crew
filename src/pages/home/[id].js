@@ -2,8 +2,8 @@ import { Autocomplete, Backdrop, Button, Dialog, DialogActions, DialogContent, D
 import { useEffect, useState } from "react"
 
 
-
 export default function Home() {
+  
 
   const [data, setData] = useState('');
 
@@ -30,26 +30,33 @@ export default function Home() {
     const [meal, setMeal] = useState('Snack');
 
     const [color, setColor] = useState('black');
-    const [popup, setPopup] = useState('hidden');
+    const [numSize, setNumSize] = useState('64px');
+    const [calorieGoal, setCalorieGoal] = useState(2000);
 
     const options = ['Breakfast', 'Lunch', 'Dinner', 'Snack']
 
     useEffect(() => {
         setCalorieCounter(breakfastCalories + lunchCalories + dinnerCalories + snackCalories) 
         changeColor();
+        changeNumSize();
     }, [breakfastCalories, lunchCalories, dinnerCalories, snackCalories, calorieCounter])
 
     function changeColor() {
-        if (calorieCounter > 0 && calorieCounter <= 200){
-            setColor("green");
-        }
-        else if (calorieCounter >= 800 && calorieCounter < 2000){
-            setColor("yellow");
-        }
-        else if (calorieCounter >= 2000){
-            setColor("red");
-        }
+      if (calorieCounter > 0 && calorieCounter <= calorieGoal / 3){
+          setColor("green");
+      }
+      else if (calorieCounter >= calorieGoal / 3 && calorieCounter < calorieGoal){
+          setColor("yellow");
+      }
+      else if (calorieCounter >= calorieGoal){
+          setColor("red");
+      }
+    }
 
+    function changeNumSize() {
+      if(calorieCounter >= 10000){
+        setNumSize('53px');
+      }
     }
 
     const [open, setOpen] = useState(false);
@@ -90,42 +97,48 @@ export default function Home() {
 
     return (
     <>
-    <div>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add Calories</DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{marginBottom: "10px"}}>
-            What meal was this for?
-          </DialogContentText>
-          <Autocomplete
-            id="combo-box-demo"
-            options={options}
-            onChange={(handleMealChange)}
-            renderInput={(params) => <TextField {...params} label="Meal" />}
-            onKeyDown={(e) => {e.preventDefault();}}
-    />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="calories"
-            label="calories"
-            type="number"
-            fullWidth
-            variant="standard"
-            autoComplete="off"
-            onInput={handleCalorieInput}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit" onClick={addCalories}>Add Calories</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-                
-        <div className="calorie-counter" style={{color: color}} onClick={handleOpen}>
-        {calorieCounter}
+        <div>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Add Calories</DialogTitle>
+            <DialogContent>
+              <DialogContentText sx={{marginBottom: "10px"}}>
+                What meal was this for?
+              </DialogContentText>
+              <Autocomplete
+                id="combo-box-demo"
+                options={options}
+                onChange={(handleMealChange)}
+                renderInput={(params) => <TextField {...params} label="Meal" />}
+                onKeyDown={(e) => {e.preventDefault();}}
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                id="calories"
+                label="calories"
+                type="number"
+                fullWidth
+                variant="standard"
+                autoComplete="off"
+                onInput={handleCalorieInput}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button type="submit" onClick={addCalories}>Add Calories</Button>
+            </DialogActions>
+          </Dialog>
         </div>
+
+        <div className="pot"  onClick={handleOpen}>
+        <img src="/icons/pot.svg"/>
+          <div className="liquid">
+            <div className="calorie-counter" style={{color: color, fontSize: numSize}}>
+            {calorieCounter} 
+            </div>
+          </div>
+        </div>
+
         <div className="meal-row">
             <div className="meal-icon" onClick={(e) => setBreakfastCalories(breakfastCalories + 100) }>
                 <div className="prevent-click">
