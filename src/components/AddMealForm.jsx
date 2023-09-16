@@ -37,22 +37,29 @@ const AddMealForm = () => {
   };
 
   const handleCompleteMeal = async () => {
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+
+    const meal = selectedFoods
+      .filter((food) => food !== "")
+      .map((food) => ({
+        food_id: "food_id", // Replace with the actual food ID
+        quantity: 1, // Replace with the quantity
+        calories_consumed: 150, // Replace with the calories consumed
+      }));
+
     try {
       // Prepare the data to send to the API
       const mealData = {
         user_id: "user_id", // Replace with the actual user ID
         daily: {
-          date: new Date(), // Replace with the date or timestamp for the meal
-          breakfast: selectedFoods
-            .filter((food) => food !== "")
-            .map((food) => ({
-              food_id: "food_id", // Replace with the actual food ID
-              quantity: 1, // Replace with the quantity
-              calories_consumed: 150, // Replace with the calories consumed
-            })),
-          lunch: [], // Similar structure for lunch, dinner, and snack
-          dinner: [],
-          snack: [],
+          date: currentDate, // Replace with the date or timestamp for the meal
+          meals: [
+            {
+              type: selectedMealType.toLowerCase(),
+              foods: selectedFoods,
+            },
+          ],
         },
       };
 
