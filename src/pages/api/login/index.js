@@ -1,5 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 import User from "../../../server/User";
 import dbConnect from "../../../server/db";
 
