@@ -10,5 +10,5 @@
       <feColorMatrix type="saturate" values="2"/>
     </filter>
   </defs>
-  <path fill-rule="evenodd" d="M.005 121C311 121 409.898-.25 811 0c400 0 500 121 789 121v77H0s.005-48 .005-77z" transform="matrix(-1 0 0 1 1600 0)" style="paint-order: fill; fill-rule: evenodd; fill: url(#gradient-0); filter: url(#saturate-filter-0);"/>
+  <path fill-rule="evenodd" d="M.005 121C311 121 409.898-.25 811 0c400 0 500 121 789 121v77H0s.005-48 .005-77z" transform="matrix(-1 0 0 1 1600 0)" style="paint-order: {fill}; fill-rule: evenodd; fill:currentColor; stroke: currentColor filter: url(#saturate-filter-0);"/>
 </svg>

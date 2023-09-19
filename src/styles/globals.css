@@ -24,6 +24,7 @@ html {
   display: flex;
   justify-content: center;
   padding-top: 30px;
+  margin-bottom: 1%;
 }
 
 .calorie-counter {
@@ -31,7 +32,8 @@ html {
   width:100%;
   text-align: center;
   font-size: 64px;
-  padding-top: 5vh;
+  padding-top: 2vh;
+  text-shadow: 0px 0px 1px black;
 }
 
 .liquid {
@@ -39,7 +41,7 @@ html {
   width: 150px;
   height: 162px;
   padding-top: 38px;
-
+  color: red;
   background-image: url("../../public/icons/coffee.svg");
   background-position: 0% 100%;
   background-size: 500%;
@@ -81,7 +83,7 @@ html {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin: 7% 10%;
+  margin: 1% 10%;
   font-size: 64px;
 }
 
@@ -91,7 +93,7 @@ html {
   margin-bottom: 1%;
   border: solid;
   border-style:solid;
-  border-width: 5px;
+  border-width: 3px;
   border-radius: 25px;
 }
 
@@ -113,4 +115,15 @@ html {
   bottom:0%;
   left:0%;
   right:0%;
+}
+
+.calories-remaining {
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  padding: 0 1%;
+  margin: auto;
+  border: solid;
+  border-width: 3px;
+  border-radius: 25px;
 }

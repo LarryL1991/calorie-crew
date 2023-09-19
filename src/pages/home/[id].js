@@ -67,6 +67,7 @@ export default function Home() {
         setOpen(false);
       };
       const handleOpen = () => {
+        setAddedCalories(0);
         setOpen(true);
       };
 
@@ -98,6 +99,7 @@ export default function Home() {
     return (
     <>
         <div>
+          <form>
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Add Calories</DialogTitle>
             <DialogContent>
@@ -107,6 +109,7 @@ export default function Home() {
               <Autocomplete
                 id="combo-box-demo"
                 options={options}
+                value={meal}
                 onChange={(handleMealChange)}
                 renderInput={(params) => <TextField {...params} label="Meal" />}
                 onKeyDown={(e) => {e.preventDefault();}}
@@ -120,6 +123,7 @@ export default function Home() {
                 fullWidth
                 variant="standard"
                 autoComplete="off"
+                onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}
                 onInput={handleCalorieInput}
               />
             </DialogContent>
@@ -128,6 +132,7 @@ export default function Home() {
               <Button type="submit" onClick={addCalories}>Add Calories</Button>
             </DialogActions>
           </Dialog>
+          </form>
         </div>
 
         <div className="pot"  onClick={handleOpen}>
@@ -139,26 +144,30 @@ export default function Home() {
           </div>
         </div>
 
+        <div className="calories-remaining">
+          <h2>Calories Remaining: {calorieGoal - calorieCounter}</h2>
+        </div>
+
         <div className="meal-row">
-            <div className="meal-icon" onClick={(e) => setBreakfastCalories(breakfastCalories + 100) }>
+            <div className="meal-icon" onClick={(e) => {handleOpen(); setMeal("Breakfast")}}>
                 <div className="prevent-click">
                     <i className="sunrise" ></i>
                     <div className="daily-calories">{breakfastCalories}</div>
                 </div>
             </div>
-            <div className="meal-icon" onClick={() => setLunchCalories(lunchCalories + 100)}>
+            <div className="meal-icon" onClick={(e) => {handleOpen(); setMeal("Lunch")}}>
                 <div className="prevent-click">
                     <i className="fa-regular fa-sun" ></i>
                     <div className="daily-calories">{lunchCalories}</div>
                 </div>
             </div>
-            <div className="meal-icon" onClick={() => setDinnerCalories(dinnerCalories + 100)}>
+            <div className="meal-icon" onClick={(e) => {handleOpen(); setMeal("Dinner")}}>
                 <div className="prevent-click">
                     <i className="fa-regular fa-moon" ></i>
                     <div className="daily-calories">{dinnerCalories}</div>
                 </div>
             </div>
-            <div className="meal-icon" onClick={() => setSnackCalories(snackCalories + 100)}>
+            <div className="meal-icon" onClick={(e) => {handleOpen(); setMeal("Snack")}}>
                 <div className="prevent-click">
                     <i className="fa-solid fa-cookie-bite" ></i>
                     <div className="daily-calories">{snackCalories}</div>

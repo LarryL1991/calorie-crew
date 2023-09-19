@@ -36,8 +36,15 @@ export default function Login() {
     {/*The 2 lines below search the database as an array, looking for a username, then password that match what the user has input and returning a true/false answer. I'm sure there's a better way to query but we're doing it caveman style for now baybeeee */}
     console.log(!!data.currentusers.find(({username}) => username.toLowerCase() === user.toLowerCase())) 
     console.log(!!data.currentusers.find(({password}) => password.toLowerCase() === pass.toLowerCase())) 
-    console.log(data.currentusers.find(({username}) => username.toLowerCase() === user.toLowerCase())._id)
-    router.push(`/home/${data.currentusers.find(({username}) => username.toLowerCase() === user.toLowerCase())._id}`)
+    try{(!!data.currentusers.find(({username}) => username.toLowerCase() === user.toLowerCase())._id)
+      console.log(data.currentusers.find(({username}) => username.toLowerCase() === user.toLowerCase())._id)
+      router.push(`/home/${data.currentusers.find(({username}) => username.toLowerCase() === user.toLowerCase())._id}`)
+    }
+    catch (error){
+      console.log("You didn't do it right, smelly :(")
+    }
+    
+    
   }
 
   
