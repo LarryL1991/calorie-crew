@@ -1,4 +1,4 @@
-import { Autocomplete, Backdrop, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
+import { Autocomplete, Backdrop, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, keyframes } from "@mui/material";
 import { useEffect, useState } from "react"
 
 
@@ -81,7 +81,7 @@ export default function Home() {
         console.log(event.target.value);
       }
 
-      function addCalories () {
+      async function addCalories () {
         if (meal === "Breakfast"){
           setBreakfastCalories(breakfastCalories + addedCalories);
         }
@@ -94,6 +94,8 @@ export default function Home() {
         else {
           setSnackCalories(snackCalories + addedCalories);
         }
+        console.log((calorieCounter + addedCalories) - calorieGoal)
+        console.log((((calorieCounter + addedCalories) / calorieGoal)).toLocaleString(undefined, {style: 'percent'}));
       }
 
     return (

@@ -42,8 +42,8 @@ html {
   height: 162px;
   padding-top: 38px;
   color: red;
-  background-image: url("../../public/icons/coffee.svg");
-  background-position: 0% 100%;
+  background-image: url("../../public/icons/juice.svg");
+  background-position: 0% -60%;
   background-size: 500%;
   background-repeat: repeat-x;
   animation: rise .8s ease-out forwards, 
@@ -51,16 +51,6 @@ html {
   opacity: 100%;
   z-index: -1;
 }
-
-@keyframes rise {
-  0% {
-      background-position-y: 500%;
-  }
-  100% {
-      background-position-y: 100%;
-  }
-}
-
 @keyframes slide{
   from {
     background-position-x: 0%;
