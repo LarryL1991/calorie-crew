@@ -1,5 +1,6 @@
 import { Autocomplete, Backdrop, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, keyframes } from "@mui/material";
 import { useEffect, useState } from "react"
+import Navbar from "@/components/Navbar";
 
 
 export default function Home() {
@@ -100,6 +101,7 @@ export default function Home() {
 
     return (
     <>
+     <Navbar/>
         <div>
           <form>
           <Dialog open={open} onClose={handleClose}>
