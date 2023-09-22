@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const foodSchema = new mongoose.Schema({
   name: String,
   calories: Number,
+  measurement: String,
   // Other nutritional information fields
 });
 
