@@ -1,0 +1,119 @@
+html {
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  position: relative;
+  background-color: rgb(255, 252, 244);
+}
+
+.login-form {
+  padding-top: 20vh;
+  width: 60%;
+  margin: auto;
+}
+
+.login-field {
+  margin-bottom: 1vh;
+}
+
+.register-help {
+  margin: auto;
+  text-align: center;
+}
+
+.pot {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  margin-bottom: 1%;
+}
+
+.calorie-counter {
+  margin: auto;
+  width:100%;
+  text-align: center;
+  font-size: 64px;
+  padding-top: 2vh;
+  text-shadow: 0px 0px 1px black;
+}
+
+.liquid {
+  position: absolute;
+  width: 150px;
+  height: 162px;
+  padding-top: 38px;
+  color: red;
+  background-image: url("../../public/icons/juice.svg");
+  background-position: 0% -60%;
+  background-size: 500%;
+  background-repeat: repeat-x;
+  animation: rise .8s ease-out forwards, 
+  slide 5s linear infinite;
+  opacity: 100%;
+  z-index: -1;
+}
+@keyframes slide{
+  from {
+    background-position-x: 0%;
+  }
+  to {
+      background-position-x: 125%; 
+  }
+}
+
+.sunrise {
+  background: url('../../public/icons/sunrise.svg');
+  display: inline-block;
+  height: 64px;
+  width: 64px;
+  background-size:contain;
+  background-repeat: no-repeat;
+}
+
+.meal-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 1% 10%;
+  font-size: 64px;
+}
+
+.meal-icon {
+  width: 160px;
+  text-align: center;
+  margin-bottom: 1%;
+  border: solid;
+  border-style:solid;
+  border-width: 3px;
+  border-radius: 25px;
+}
+
+.prevent-click {
+  pointer-events: none;
+}
+
+.page-aligner{
+  visibility: hidden;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.301);
+  top:0%;
+  bottom:0%;
+  left:0%;
+  right:0%;
+}
+
+.calories-remaining {
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  padding: 0 1%;
+  margin: auto;
+  border: solid;
+  border-width: 3px;
+  border-radius: 25px;
+}
