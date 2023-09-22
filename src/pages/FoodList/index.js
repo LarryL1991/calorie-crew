@@ -1,4 +1,13 @@
-import { Button } from "@mui/material";
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -18,18 +27,38 @@ export default function FoodList() {
   return (
     <div>
       <h1>Food List</h1>
-      <ul>
-        {foods.map((food) => (
-          <li key={food._id}>
-            {food.name} - {food.calories} calories
-            <Link href={`/FoodList/${food._id}`}>
-              <Button>View Details</Button>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <Link href="FoodList/new">
-        <Button>New Item</Button>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Calories</TableCell>
+              <TableCell>Measurement</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {foods.map((food) => (
+              <TableRow key={food._id}>
+                <TableCell>{food.name}</TableCell>
+                <TableCell>{food.calories} calories</TableCell>
+                <TableCell>{food.measurement}</TableCell>
+                <TableCell>
+                  <Link href={`/FoodList/${food._id}`}>
+                    <Button variant="contained" color="primary">
+                      View Details
+                    </Button>
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Link href="/FoodList/new">
+        <Button variant="contained" color="primary">
+          New Item
+        </Button>
       </Link>
     </div>
   );

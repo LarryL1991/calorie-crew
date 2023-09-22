@@ -4,7 +4,11 @@ import { Button, TextField, Typography, Container, Grid } from "@mui/material";
 
 export default function AddFoodForm() {
   const router = useRouter();
-  const [food, setFood] = useState({ name: "", calories: "" });
+  const [food, setFood] = useState({
+    name: "",
+    calories: "",
+    measurement: "",
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -37,6 +41,16 @@ export default function AddFoodForm() {
               label="Name"
               name="name"
               value={food.name}
+              onChange={handleInputChange}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Measurement"
+              name="measurement"
+              value={food.measurement}
               onChange={handleInputChange}
               variant="outlined"
             />

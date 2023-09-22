@@ -72,6 +72,14 @@ export default function ListingIdPage() {
               label="Calories"
               variant="standard"
             />
+            <TextField
+              value={food.measurement} // Display the measurement field
+              onChange={(e) =>
+                setFood({ ...food, measurement: e.target.value })
+              }
+              label="Measurement"
+              variant="standard"
+            />
             <Button
               disabled={JSON.stringify(originalFood) === JSON.stringify(food)}
               onClick={() => handleSubmit()}
@@ -88,7 +96,7 @@ export default function ListingIdPage() {
           >
             Delete
           </Button>
-          <Link href=".">
+          <Link href="/FoodList">
             <Button variant="contained" color="primary">
               Return to Food List
             </Button>

@@ -1,48 +1,26 @@
-import mealSchema from "../../../models/Meal.js";
+import Meal from "../../../models/Meal.js";
 import dbConnect from "../../../../server/db";
 
 export default async function handler(req, res) {
-  await dbConnect();
+  if (req.method !== "POST") {
+    return res.status(405).end(); // Method not allowed
+  }
 
-  if (req.method === "POST") {
-    console.log("got POST request");
+  try {
+    // Connect to the MongoDB database
+    await dbConnect();
 
-    const { user_id, daily } = req.body;
-    console.log(user_id);
-    console.log(daily.date);
-    console.log(daily);
-    console.log(daily.foods);
+    // Create a new meal document based on the request body
+    const newMeal = new Meal(req.body);
+    console.log(newMeal);
 
-    const userMeal = await mealSchema.findOne({
-      user_id,
-      "daily.date": daily.date,
-    });
+    // Save the meal to the database
+    await newMeal.save();
 
-    if (userMeal) {
-      // Update the existing meal entry for the current date and meal type
-      console.log("found!");
-      userMeal.daily = daily;
-      await userMeal.save();
-      res.status(200).json(userMeal);
-    } else {
-      // Create a new meal entry for the current date and meal type
-      console.log("not found!");
-      const newMeal = new mealSchema({
-        user_id,
-        daily: {
-          date: daily.date,
-          meals: [
-            {
-              type: daily.meals.type,
-              foods: [daily.meals.foods],
-            },
-          ],
-        },
-      });
-      await newMeal.save();
-      res.status(201).json(newMeal);
-    }
-  } else {
-    res.status(405).json({ message: "Method not allowed" });
+    // Send a success response
+    res.status(201).json({ message: "Meal saved successfully", meal: newMeal });
+  } catch (error) {
+    // Handle errors and send an error response
+    res.status(500).json({ error: "Failed to save the meal" });
   }
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   IconButton,
@@ -13,11 +13,21 @@ import FoodSelector from "./FoodSelector"; // Import your FoodSelector component
 import DeleteIcon from "@mui/icons-material/Delete"; // Import the delete icon
 
 const AddMealForm = () => {
-  const [selectedFoods, setSelectedFoods] = useState([""]); // Initialize with one empty food item
+  const [selectedFoods, setSelectedFoods] = useState([
+    {
+      _id: "", // User-selected food _id
+      name: "", // User-selected food
+      calories: 0, // Calories for the selected food (fetched from the database)
+      quantity: 1, // Quantity set by the user (initially set to 1)
+    },
+  ]);
   const [selectedMealType, setSelectedMealType] = useState("");
 
   const handleAddItem = () => {
-    setSelectedFoods([...selectedFoods, ""]);
+    setSelectedFoods([
+      ...selectedFoods,
+      { food: "", _id: "", calories: 0, quantity: 1 },
+    ]);
   };
 
   const handleRemoveItem = (index) => {
@@ -28,7 +38,12 @@ const AddMealForm = () => {
 
   const handleFoodSelection = (food, index) => {
     const updatedSelectedFoods = [...selectedFoods];
-    updatedSelectedFoods[index] = food;
+    updatedSelectedFoods[index] = {
+      _id: food?._id || "", // Update _id if food is not null, otherwise, reset to an empty string
+      name: food?.name || "", // Update name if food is not null, otherwise, reset to an empty string
+      calories: food?.calories || 0, // Update calories if food is not null, otherwise, reset to 0
+      quantity: 1, // Reset quantity to 1
+    };
     setSelectedFoods(updatedSelectedFoods);
   };
 
@@ -36,31 +51,33 @@ const AddMealForm = () => {
     setSelectedMealType(event.target.value);
   };
 
+  const handleQuantityChange = (event, index) => {
+    const updatedSelectedFoods = [...selectedFoods];
+    updatedSelectedFoods[index] = {
+      ...updatedSelectedFoods[index],
+      quantity: parseInt(event.target.value) || 1, // Ensure quantity is a positive number
+    };
+    setSelectedFoods(updatedSelectedFoods);
+  };
+
   const handleCompleteMeal = async () => {
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
 
-    const meal = selectedFoods
-      .filter((food) => food !== "")
-      .map((food) => ({
-        food_id: "food_id", // Replace with the actual food ID
-        quantity: 1, // Replace with the quantity
-        calories_consumed: 150, // Replace with the calories consumed
-      }));
-
     try {
+      // Calculate the total calories consumed for the meal
+      const totalCalories = selectedFoods.reduce(
+        (total, food) => total + food.calories * food.quantity,
+        0
+      );
+
       // Prepare the data to send to the API
       const mealData = {
-        user_id: "user_id", // Replace with the actual user ID
-        daily: {
-          date: currentDate, // Replace with the date or timestamp for the meal
-          meals: [
-            {
-              type: selectedMealType.toLowerCase(),
-              foods: selectedFoods,
-            },
-          ],
-        },
+        user_id: "6d65616c5f69645f68657265", /// THIS IS HARD CODED NEED TO CHANGE WHEN WE GET AUTHENTICATION
+        date: currentDate.toISOString(), // Format the date as required
+        meal_type: selectedMealType.toLowerCase(),
+        food_items: selectedFoods,
+        total_calories: totalCalories,
       };
 
       console.log(mealData);
@@ -78,7 +95,14 @@ const AddMealForm = () => {
         // Handle success, e.g., show a success message
         console.log("Meal added successfully!");
         // Reset the form or do any other necessary actions
-        setSelectedFoods([""]); // Reset selected foods
+        setSelectedFoods([
+          {
+            name: "",
+            _id: "",
+            calories: 0,
+            quantity: 1,
+          },
+        ]);
         setSelectedMealType("");
       } else {
         // Handle error, e.g., show an error message
@@ -108,10 +132,25 @@ const AddMealForm = () => {
       </FormControl>
       {selectedFoods.map((selectedFood, index) => (
         <Grid container spacing={2} key={index}>
-          <Grid item xs={11}>
+          <Grid item xs={5}>
             <FoodSelector
-              foodTypes={[]} // Pass your food types here
               onFoodSelect={(food) => handleFoodSelection(food, index)}
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <TextField
+              label="Calories"
+              variant="outlined"
+              value={selectedFood.calories}
+              disabled
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <TextField
+              label="Quantity"
+              variant="outlined"
+              value={selectedFood.quantity}
+              onChange={(event) => handleQuantityChange(event, index)}
             />
           </Grid>
           <Grid item xs={1}>

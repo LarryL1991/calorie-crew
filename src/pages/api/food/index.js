@@ -21,6 +21,7 @@ export default async function handler(req, res) {
     }
   } else if (req.method === "POST") {
     const newFoodSchema = new foodSchema(req.body);
+    console.log(req.body);
     await newFoodSchema.save();
     res.status(201).json(newFoodSchema);
   } else {

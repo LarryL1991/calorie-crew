@@ -13,9 +13,10 @@ export default async function foodById(req, res) {
   if (req.method === "GET") {
     res.status(200).json(food);
   } else if (req.method === "PUT") {
-    const { calories, name } = req.body;
+    const { calories, name, measurement } = req.body; // Include measurement in the destructuring
     food.name = name;
     food.calories = calories;
+    food.measurement = measurement; // Update the measurement field
     await food.save();
     console.log(food);
     res.status(200).json(food);
