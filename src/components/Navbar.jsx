@@ -2,15 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
 import NavItem from "./NavItem";
+import { UserButton } from "@clerk/nextjs";
 
 const MENU_LIST = [
   { text: "Calorie History", href: "/calorie-history" },
   { text: "Food", href: "/food" },
   { text: "Guidelines", href: "/guideline" },
-  { text: "Meal Plan", href: "/meal-plan"},
-  { text: "Options", href: "/option"},
-  { text: "Profile", href: "/profile"},
-  
+  { text: "Meal Plan", href: "/meal-plan" },
+  { text: "Options", href: "/option" },
+  { text: "Sign-up", href: "/sign-up" },
 ];
 const Navbar = () => {
   const [navActive, setNavActive] = useState(null);
@@ -20,7 +20,7 @@ const Navbar = () => {
     <header>
       <nav className={`nav`}>
         <Link href={"/home"}>
-            <h1 className="logo">Calorie Counter</h1>
+          <h1 className="logo">Calorie Counter</h1>
         </Link>
         <div
           onClick={() => setNavActive(!navActive)}
@@ -42,6 +42,7 @@ const Navbar = () => {
               <NavItem active={activeIdx === idx} {...menu} />
             </div>
           ))}
+          <UserButton afterSignOutUrl="/" />
         </div>
       </nav>
     </header>
