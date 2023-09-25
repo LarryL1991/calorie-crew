@@ -2,15 +2,22 @@ import { Autocomplete, Backdrop, Button, Dialog, DialogActions, DialogContent, D
 import { useEffect, useState } from "react"
 import Navbar from "@/components/Navbar";
 import AddMealForm from "@/components/AddMealForm";
+import {useRouter} from 'next/router';
 
+export async function getServerSideProps(context) { //Allows slug to persist on refresh. Code yoinked from https://stackoverflow.com/questions/65859612/id-is-gone-when-i-refresh-a-nextjs-dynamic-route-page
+  return {
+      props: {},
+  };
+}
 
 export default function Home() {
-  
+  const router = useRouter()
+  const {id} = router.query;
 
   const [data, setData] = useState('');
 
   async function fetchData() {
-    const response = await fetch("/api/home")
+    const response = await fetch(`/api/home/${id}`)
     setData(await response.json());
   }
 
@@ -70,6 +77,7 @@ export default function Home() {
       };
 
       const handleOpenCalorieForm = () => {
+        setMeal("Snack")
         setAddedCalories(0);
         setOpenCalorieForm(true);
       };
@@ -149,7 +157,7 @@ export default function Home() {
         </div>
 
         <Dialog open={openMealForm} onClose={handleCloseMealForm}>
-          <AddMealForm/>
+          <AddMealForm currentMeal={meal}/>
         </Dialog>
 
         
@@ -158,14 +166,15 @@ export default function Home() {
         <div className="pot"  onClick={handleOpenCalorieForm}>
         <img src="/icons/pot.svg"/>
           <div className="liquid">
-            <div className="calorie-counter" style={{color: color, fontSize: numSize}}>
+            <div className="calorie-counter" style={{fontSize: numSize}}>
             {calorieCounter} 
             </div>
           </div>
         </div>
 
         <div className="calories-remaining">
-          <h2>Calories Remaining: {calorieGoal - calorieCounter}</h2>
+          <h2 style={{marginRight: 10}}>Calories Remaining:</h2>
+          <h2 style={{color: color, textShadow: '0px 0px 1px black'}}>{calorieGoal - calorieCounter}</h2>
         </div>
 
         <div className="meal-row">

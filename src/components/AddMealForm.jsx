@@ -12,7 +12,8 @@ import {
 import FoodSelector from "./FoodSelector"; // Import your FoodSelector component
 import DeleteIcon from "@mui/icons-material/Delete"; // Import the delete icon
 
-const AddMealForm = () => {
+
+const AddMealForm = (props) => {
   const [selectedFoods, setSelectedFoods] = useState([
     {
       _id: "", // User-selected food _id
@@ -21,7 +22,7 @@ const AddMealForm = () => {
       quantity: 1, // Quantity set by the user (initially set to 1)
     },
   ]);
-  const [selectedMealType, setSelectedMealType] = useState("");
+  const [selectedMealType, setSelectedMealType] = useState(props?.currentMeal);
 
   const handleAddItem = () => {
     setSelectedFoods([
@@ -73,7 +74,7 @@ const AddMealForm = () => {
 
       // Prepare the data to send to the API
       const mealData = {
-        user_id: "6d65616c5f69645f68657265", /// THIS IS HARD CODED NEED TO CHANGE WHEN WE GET AUTHENTICATION
+        user_id: "650f1b329c4be8817b27567c", /// THIS IS HARD CODED NEED TO CHANGE WHEN WE GET AUTHENTICATION
         date: currentDate.toISOString(), // Format the date as required
         meal_type: selectedMealType.toLowerCase(),
         food_items: selectedFoods,
@@ -120,7 +121,7 @@ const AddMealForm = () => {
         <Select
           labelId="meal-type-label"
           id="meal-type"
-          value={selectedMealType}
+          defaultValue={props?.currentMeal} //This now defaults to the current meal selected, ignoring this line if it's null (I believe. We just learned this and I wanted to use it)
           label="Meal Type"
           onChange={handleMealTypeChange}
         >
