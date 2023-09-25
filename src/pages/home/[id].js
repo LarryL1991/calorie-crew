@@ -1,6 +1,7 @@
 import { Autocomplete, Backdrop, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, keyframes } from "@mui/material";
 import { useEffect, useState } from "react"
 import Navbar from "@/components/Navbar";
+import AddMealForm from "@/components/AddMealForm";
 
 
 export default function Home() {
@@ -60,16 +61,17 @@ export default function Home() {
       }
     }
 
-    const [open, setOpen] = useState(false);
+    const [openCalorieForm, setOpenCalorieForm] = useState(false);
 
-    const handleClose = () => {
+    const handleCloseCalorieForm = () => {
         console.log(addedCalories);
         handleCalorieInput;
-        setOpen(false);
+        setOpenCalorieForm(false);
       };
-      const handleOpen = () => {
+
+      const handleOpenCalorieForm = () => {
         setAddedCalories(0);
-        setOpen(true);
+        setOpenCalorieForm(true);
       };
 
       function handleMealChange(event, value) {
@@ -98,13 +100,21 @@ export default function Home() {
         console.log((calorieCounter + addedCalories) - calorieGoal)
         console.log((((calorieCounter + addedCalories) / calorieGoal)).toLocaleString(undefined, {style: 'percent'}));
       }
+      
+      const [openMealForm, setOpenMealForm] = useState(false);
+
+      const handleCloseMealForm = () => {
+          setOpenMealForm(false);
+        };
+        const handleOpenMealForm = () => {
+          setOpenMealForm(true);
+        };
 
     return (
     <>
      <Navbar/>
         <div>
-          <form>
-          <Dialog open={open} onClose={handleClose}>
+          <Dialog open={openCalorieForm} onClose={handleCloseCalorieForm}>
             <DialogTitle>Add Calories</DialogTitle>
             <DialogContent>
               <DialogContentText sx={{marginBottom: "10px"}}>
@@ -132,14 +142,20 @@ export default function Home() {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={handleCloseCalorieForm}>Cancel</Button>
               <Button type="submit" onClick={addCalories}>Add Calories</Button>
             </DialogActions>
           </Dialog>
-          </form>
         </div>
 
-        <div className="pot"  onClick={handleOpen}>
+        <Dialog open={openMealForm} onClose={handleCloseMealForm}>
+          <AddMealForm/>
+        </Dialog>
+
+        
+        
+
+        <div className="pot"  onClick={handleOpenCalorieForm}>
         <img src="/icons/pot.svg"/>
           <div className="liquid">
             <div className="calorie-counter" style={{color: color, fontSize: numSize}}>
@@ -153,25 +169,25 @@ export default function Home() {
         </div>
 
         <div className="meal-row">
-            <div className="meal-icon" onClick={(e) => {handleOpen(); setMeal("Breakfast")}}>
+            <div className="meal-icon" onClick={(e) => {handleOpenMealForm(); setMeal("Breakfast")}}>
                 <div className="prevent-click">
                     <i className="sunrise" ></i>
                     <div className="daily-calories">{breakfastCalories}</div>
                 </div>
             </div>
-            <div className="meal-icon" onClick={(e) => {handleOpen(); setMeal("Lunch")}}>
+            <div className="meal-icon" onClick={(e) => {handleOpenMealForm(); setMeal("Lunch")}}>
                 <div className="prevent-click">
                     <i className="fa-regular fa-sun" ></i>
                     <div className="daily-calories">{lunchCalories}</div>
                 </div>
             </div>
-            <div className="meal-icon" onClick={(e) => {handleOpen(); setMeal("Dinner")}}>
+            <div className="meal-icon" onClick={(e) => {handleOpenMealForm(); setMeal("Dinner")}}>
                 <div className="prevent-click">
                     <i className="fa-regular fa-moon" ></i>
                     <div className="daily-calories">{dinnerCalories}</div>
                 </div>
             </div>
-            <div className="meal-icon" onClick={(e) => {handleOpen(); setMeal("Snack")}}>
+            <div className="meal-icon" onClick={(e) => {handleOpenMealForm(); setMeal("Snack")}}>
                 <div className="prevent-click">
                     <i className="fa-solid fa-cookie-bite" ></i>
                     <div className="daily-calories">{snackCalories}</div>
