@@ -1,5 +1,5 @@
 import Meal from "../../../models/Meal.js";
-import dbConnect from "../../../../server/db";
+import dbConnect from "../../../server/db";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {

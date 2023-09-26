@@ -29,6 +29,7 @@ const MealList = () => {
   const fetchMeals = async () => {
     try {
       // Make an API request to fetch meals for the specified userId and date
+      console.log(date);
       const response = await fetch(`/api/meals/${userId}/${date}`);
       const data = await response.json();
       setMeals(data.meals);
