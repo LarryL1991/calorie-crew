@@ -10,15 +10,15 @@ export default async function handler(req, res) {
     const oneDayMilliseconds = 24 * 60 * 60 * 1000;
 
     const theDate = new Date(date);
-    const oneDayBack = new Date(theDate.getTime() + oneDayMilliseconds);
-    console.log({ theDate, oneDayBack });
+    const oneDayForward = new Date(theDate.getTime() + oneDayMilliseconds);
+    //console.log({ theDate, oneDayBack: oneDayForward });
 
-    const startDate = new Date(oneDayBack);
+    const startDate = new Date(oneDayForward);
     startDate.setHours(0, 0, 0, 0); // Set the start time to 00:00:00.000
-    const endDate = new Date(oneDayBack);
+    const endDate = new Date(oneDayForward);
     endDate.setHours(23, 59, 59, 999); // Set the end time to 23:59:59.999
 
-    console.log({ theDate, startDate, endDate });
+    //console.log({ theDate, startDate, endDate });
 
     const meals = await mealSchema.find({
       user_id: userId,
