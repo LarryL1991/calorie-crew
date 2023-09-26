@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import FoodSelector from "./FoodSelector"; // Import your FoodSelector component
 import DeleteIcon from "@mui/icons-material/Delete"; // Import the delete icon
+import { useAuth } from "@clerk/nextjs";
 
 const AddMealForm = () => {
   const [selectedFoods, setSelectedFoods] = useState([
@@ -22,6 +23,8 @@ const AddMealForm = () => {
     },
   ]);
   const [selectedMealType, setSelectedMealType] = useState("");
+
+  const { isLoaded, userId } = useAuth();
 
   const handleAddItem = () => {
     setSelectedFoods([
@@ -60,9 +63,14 @@ const AddMealForm = () => {
     setSelectedFoods(updatedSelectedFoods);
   };
 
-  const handleCompleteMeal = async () => {
+  const HandleCompleteMeal = async () => {
     const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
+
+    if (!isLoaded || !userId) {
+      return null;
+    }
+
+    console.log(userId);
 
     try {
       // Calculate the total calories consumed for the meal
@@ -73,7 +81,7 @@ const AddMealForm = () => {
 
       // Prepare the data to send to the API
       const mealData = {
-        user_id: "6d65616c5f69645f68657265", /// THIS IS HARD CODED NEED TO CHANGE WHEN WE GET AUTHENTICATION
+        user_id: userId,
         date: currentDate.toISOString(), // Format the date as required
         meal_type: selectedMealType.toLowerCase(),
         food_items: selectedFoods,
@@ -169,7 +177,7 @@ const AddMealForm = () => {
         Add Item
       </Button>
       <div>
-        <Button variant="outlined" onClick={handleCompleteMeal}>
+        <Button variant="outlined" onClick={HandleCompleteMeal}>
           Complete Meal
         </Button>
       </div>

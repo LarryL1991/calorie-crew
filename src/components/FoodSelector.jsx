@@ -69,7 +69,7 @@ const FoodSelector = ({ onFoodSelect }) => {
             ),
           }}
           // Override endAdornment to remove the "x" icon
-          InputAdornmentProps={{ position: "end" }}
+          inputadornmentprops={{ position: "end" }}
         />
       )}
       onChange={(_, newValue) => onFoodSelect(newValue)}
