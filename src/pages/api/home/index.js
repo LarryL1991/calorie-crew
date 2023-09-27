@@ -1,19 +1,17 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
-import Food from "../../../server/Food";
+import Intake from "../../../server/Intake";
 import dbConnect from "../../../server/db";
 
 export default async function handler(req, res) {
   await dbConnect();
 
   if (req.method === "GET") {
-    const foodItems = await Food.find(
-      { name: { $ne: "" } },
-      { name: true, calories: true},
+    const dailyIntake = await Intake.find(
+      { user_id: { $ne: "" } },
+      { user_id: true, date: true, total_calories: true},
       { limit: 10, sort: { name: "asc" } }
     );
 
-    res.status(200).json({ foodList: foodItems });
+    res.status(200).json({ totalCalories: dailyIntake });
   } else {
     res.status(405).json({ message: "Method not allowed" });
   }

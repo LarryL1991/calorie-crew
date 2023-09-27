@@ -1,6 +1,5 @@
 import { Autocomplete, Backdrop, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, keyframes } from "@mui/material";
 import { useEffect, useState } from "react"
-import Navbar from "@/components/Navbar";
 import AddMealForm from "@/components/AddMealForm";
 import { useAuth } from "@clerk/nextjs";
 
@@ -24,6 +23,28 @@ export default function Home() {
 
     const options = ['Breakfast', 'Lunch', 'Dinner', 'Snack']
 
+    const [date, setDate] = useState("2023-09-27"); // State for date input
+  
+    const fetchCaloriesForDate = async () => {
+      try {
+        // Make an API request to fetch meals for the specified userId and date
+        console.log(date);
+        const response = await fetch(`/api/home/${userId}/${date}`);
+        const data = await response.json();
+
+        const calorieArray = Object.values(data)
+
+        console.log(...calorieArray);
+        
+        console.log([...calorieArray][0][1])
+
+      } catch (error) {
+        console.error(error);
+      }
+
+      
+    };
+
     useEffect(() => {
         setCalorieCounter(breakfastCalories + lunchCalories + dinnerCalories + snackCalories) 
         changeColor();
@@ -31,7 +52,7 @@ export default function Home() {
     }, [breakfastCalories, lunchCalories, dinnerCalories, snackCalories, calorieCounter])
 
     function changeColor() {
-      if (calorieCounter > 0 && calorieCounter <= calorieGoal / 3){
+      if (calorieCounter >= 0 && calorieCounter <= calorieGoal / 3){
           setColor("green");
       }
       else if (calorieCounter >= calorieGoal / 3 && calorieCounter < calorieGoal){
@@ -142,7 +163,7 @@ export default function Home() {
         
         
 
-        <div className="pot"  onClick={handleOpenCalorieForm}>
+        <div className="pot"  onClick={fetchCaloriesForDate}>
         <img src="/icons/pot.svg"/>
           <div className="liquid">
             <div className="calorie-counter" style={{fontSize: numSize}}>
