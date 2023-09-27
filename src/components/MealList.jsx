@@ -29,6 +29,7 @@ const MealList = () => {
   const fetchMeals = async () => {
     try {
       // Make an API request to fetch meals for the specified userId and date
+      console.log(date);
       const response = await fetch(`/api/meals/${userId}/${date}`);
       const data = await response.json();
       setMeals(data.meals);
@@ -95,7 +96,7 @@ const MealList = () => {
                       <ul>
                         {meal.food_items.map((food) => (
                           <li key={food._id}>
-                            {food.name} - {food.quantity} x {food.calories}{" "}
+                            {food.name} x {food.quantity} - {food.calories}{" "}
                             calories
                           </li>
                         ))}

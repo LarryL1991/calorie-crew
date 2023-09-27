@@ -2,9 +2,8 @@ import mongoose from "mongoose";
 
 const mealSchema = new mongoose.Schema({
   user_id: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
-    ref: "User", // Reference to the User model
   },
   date: {
     type: Date,
@@ -17,10 +16,17 @@ const mealSchema = new mongoose.Schema({
   },
   food_items: [
     {
-      _id: {
-        type: mongoose.Schema.Types.ObjectId,
+      name: {
+        type: String,
         required: true,
-        ref: "Food", // Reference to the Food model
+      },
+      calories: {
+        type: String,
+        required: true,
+      },
+      measurement: {
+        type: String,
+        required: true,
       },
       quantity: {
         type: Number,
