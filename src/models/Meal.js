@@ -16,10 +16,17 @@ const mealSchema = new mongoose.Schema({
   },
   food_items: [
     {
-      _id: {
-        type: mongoose.Schema.Types.ObjectId,
+      name: {
+        type: String,
         required: true,
-        ref: "Food", // Reference to the Food model
+      },
+      calories: {
+        type: String,
+        required: true,
+      },
+      measurement: {
+        type: String,
+        required: true,
       },
       quantity: {
         type: Number,
