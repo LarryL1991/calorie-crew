@@ -10,7 +10,7 @@ const MENU_LIST = [
   { text: "Guidelines", href: "/guideline" },
   { text: "Meal Plan", href: "/meal-plan" },
   { text: "Options", href: "/option" },
-  { text: "Sign-up", href: "/sign-up" },
+  // { text: "Sign-up", href: "/sign-up" },
 ];
 const Navbar = () => {
   const [navActive, setNavActive] = useState(null);

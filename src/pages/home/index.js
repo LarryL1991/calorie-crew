@@ -111,6 +111,7 @@ export default function Home() {
 
   return (
     <>
+      <Navbar/>
       <div>
         <form>
           <Dialog open={open} onClose={handleClose}>
