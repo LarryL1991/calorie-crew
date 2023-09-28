@@ -23,27 +23,37 @@ export default function Home() {
 
     const options = ['Breakfast', 'Lunch', 'Dinner', 'Snack']
 
-    const [date, setDate] = useState("2023-09-27"); // State for date input
+    const [date, setDate] = useState("2023-09-28"); // State for date input
   
-    const fetchCaloriesForDate = async () => {
+    async function fetchCaloriesForDate() {
       try {
         // Make an API request to fetch meals for the specified userId and date
         console.log(date);
         const response = await fetch(`/api/home/${userId}/${date}`);
         const data = await response.json();
+        const calorieObject = Object.values(data)
 
-        const calorieArray = Object.values(data)
+        const calorieArray = [...calorieObject[0]]
 
-        console.log(...calorieArray);
+        console.log(calorieArray);
         
-        console.log([...calorieArray][0][1])
-
+        for (let i = 0; i < [...calorieArray].length; i++){
+          //console.log([...calorieArray][i].meal_type)
+          switch ([...calorieArray][i].meal_type){
+            case (`breakfast`): console.log(`Brekky! ${[...calorieArray][i].total_calories}`); setBreakfastCalories(prevBreakfastCalories => prevBreakfastCalories + [...calorieArray][i].total_calories); break;
+            case (`lunch`): console.log(`Lonche! ${[...calorieArray][i].total_calories}`); setLunchCalories(prevLunchCalories => prevLunchCalories + [...calorieArray][i].total_calories); break; 
+            case (`dinner`): console.log(`Din-din! ${[...calorieArray][i].total_calories}`); setDinnerCalories(prevDinnerCalories => prevDinnerCalories + [...calorieArray][i].total_calories); break; 
+            case (`snack`): console.log(`Snake! ${[...calorieArray][i].total_calories}`); setSnackCalories(prevSnackCalories => prevSnackCalories + [...calorieArray][i].total_calories); break; 
+          }
+        }
       } catch (error) {
         console.error(error);
-      }
-
-      
+      }    
     };
+
+    useEffect(() => {
+      fetchCaloriesForDate();
+    }, [])
 
     useEffect(() => {
         setCalorieCounter(breakfastCalories + lunchCalories + dinnerCalories + snackCalories) 
@@ -65,7 +75,10 @@ export default function Home() {
 
     function changeNumSize() {
       if(calorieCounter >= 10000){
-        setNumSize('53px');
+        setNumSize('50px');
+      }
+      else if(calorieCounter >= 1000){
+        setNumSize('58px');
       }
     }
 
@@ -163,7 +176,7 @@ export default function Home() {
         
         
 
-        <div className="pot"  onClick={fetchCaloriesForDate}>
+        <div className="pot">  {/*onClick={fetchCaloriesForDate}*/}
         <img src="/icons/pot.svg"/>
           <div className="liquid">
             <div className="calorie-counter" style={{fontSize: numSize}}>

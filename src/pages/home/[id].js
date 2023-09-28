@@ -14,10 +14,12 @@ export default function Home() {
   const router = useRouter()
   const {id} = router.query;
 
+  const [date, setDate] = useState("2023-09-28"); // State for date input
+
   const [data, setData] = useState('');
 
   async function fetchData() {
-    const response = await fetch(`/api/home/${id}`)
+    const response = await fetch(`/api/home/${id}/${date}`)
     setData(await response.json());
   }
 
