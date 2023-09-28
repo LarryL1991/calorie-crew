@@ -29,8 +29,9 @@ export default function Home() {
       try {
         // Make an API request to fetch meals for the specified userId and date
         console.log(date);
-        const response = await fetch(`/api/home/${userId}/${date}`);
-        const data = await response.json();
+          const response = await fetch(`/api/home/${userId}/${date}`);
+          const data = await response.json();
+        
         const calorieObject = Object.values(data)
 
         const calorieArray = [...calorieObject[0]]
@@ -53,7 +54,7 @@ export default function Home() {
 
     useEffect(() => {
       fetchCaloriesForDate();
-    }, [])
+    }, [userId])
 
     useEffect(() => {
         setCalorieCounter(breakfastCalories + lunchCalories + dinnerCalories + snackCalories) 
