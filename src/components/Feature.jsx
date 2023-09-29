@@ -51,9 +51,8 @@ const FeatureBox = (props) => {
 const Feature = () => {
 
   const features = [
-    {id : 1, img : "", title : "Food", desc : "FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD", link : "/"},
+    {id : 1, img : "./images/1.png", title : "Dashboard", desc : "Track your breakfast,lunch, dinner, and even snack times.", link : "/"},
     {id : 2, img : "", title : "Food", desc : "FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD.", link : "/"},
-    {id : 3, img : "", title : "Food", desc : "FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD", link : "/"},
   ];
 
   return (
@@ -63,7 +62,7 @@ const Feature = () => {
           <Col lg={6} md={8}>
             <div className="title text-center mb-5">
               <h3 className="font-weight-normal text-dark"><span className="text-warning">Features</span></h3>
-              <p className="text-muted">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
+              <p className="text-muted">Dashboard to keep track of calories and way to add specific food you have eaten!</p>
             </div>
           </Col>
         </Row>

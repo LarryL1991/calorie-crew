@@ -8,11 +8,11 @@ const Hero = () => {
         <Row className="align-items-center">
           <Col lg={6}>
             <div className="pr-lg-5">
-              <p className="text-uppercase text-primary font-weight-medium f-14 mb-4">Food Food</p>
-              <h1 className="mb-4 font-weight-normal line-height-1_4">Burger burger burger burger <span className="text-primary font-weight-medium">Burger</span></h1>
-              <p className="text-muted mb-4 pb-2">Burger Burger Burger Burger Burger Burger Burger Burger Burger BurgerBurger Burger Burger Burger Burger</p>
+              <p className="text-uppercase text-primary font-weight-medium f-14 mb-4">Meal Plans</p>
+              <h1 className="mb-4 font-weight-normal line-height-1_4">Burger Burger Burger</h1>
+              <p className="text-muted mb-4 pb-2">You should not be eating burgers and fries, but if you must, throw some lettuce on it.</p>
               <a href="#" className="btn btn-warning">
-              Burger Burger Burger Burger Burger <span className="ml-2 right-icon">&#8594;</span>
+              Read More <span className="ml-2 right-icon">&#8594;</span>
               </a>
             </div>
           </Col>
