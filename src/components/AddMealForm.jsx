@@ -23,7 +23,7 @@ const AddMealForm = (props) => {
       quantity: 1, // Quantity set by the user (initially set to 1)
     },
   ]);
-  const [selectedMealType, setSelectedMealType] = useState("");
+  const [selectedMealType, setSelectedMealType] = useState(props.currentMeal);
   const [date, setDate] = useState("1900-01-01");
 
   const { isLoaded, userId } = useAuth();
@@ -127,6 +127,10 @@ const AddMealForm = (props) => {
           },
         ]);
         setSelectedMealType("");
+
+        if (props.fetchCaloriesForDate !== undefined){
+          props.fetchCaloriesForDate();
+        }
       } else {
         // Handle error, e.g., show an error message
         console.error("Failed to add meal");

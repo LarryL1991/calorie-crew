@@ -1,10 +1,10 @@
 import { Autocomplete, Backdrop, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, keyframes } from "@mui/material";
 import { useEffect, useState } from "react"
-import Navbar from "@/components/Navbar";
 import AddMealForm from "@/components/AddMealForm";
 import { useAuth } from "@clerk/nextjs";
 
 export default function Home() {
+  
 
     const {userId} = useAuth();
 
@@ -23,6 +23,49 @@ export default function Home() {
     const [calorieGoal, setCalorieGoal] = useState(2000);
 
     const options = ['Breakfast', 'Lunch', 'Dinner', 'Snack']
+    const [date, setDate] = useState("2023-09-28"); // State for date input
+    const dateObject = new Date();
+    dateObject.setUTCHours(0, 0, 0, 0)
+    console.log(dateObject.toISOString());
+    
+
+    // const currentMonth = dateObject.getMonth()+1;
+    // const currentYear = dateObject.getFullYear();
+    // const currentDate = dateObject.getDate();
+    // const dateString = (currentMonth + "-" + currentDate + "-" + currentYear);
+  
+    async function fetchCaloriesForDate() {
+
+      setCalorieCounter(0); setBreakfastCalories(0); setLunchCalories(0); setDinnerCalories(0); setSnackCalories(0);
+
+      try {
+        // Make an API request to fetch meals for the specified userId and date
+          const response = await fetch(`/api/home/${userId}/${dateObject}`);
+          const data = await response.json();
+        
+        const calorieObject = Object.values(data)
+
+        const calorieArray = [...calorieObject[0]]
+
+        console.log(calorieArray);
+        
+        for (let i = 0; i < [...calorieArray].length; i++){
+          //console.log([...calorieArray][i].meal_type)
+          switch ([...calorieArray][i].meal_type){
+            case (`breakfast`): console.log(`Brekky! ${[...calorieArray][i].total_calories}`); setBreakfastCalories(prevBreakfastCalories => prevBreakfastCalories + [...calorieArray][i].total_calories); break;
+            case (`lunch`): console.log(`Lonche! ${[...calorieArray][i].total_calories}`); setLunchCalories(prevLunchCalories => prevLunchCalories + [...calorieArray][i].total_calories); break; 
+            case (`dinner`): console.log(`Din-din! ${[...calorieArray][i].total_calories}`); setDinnerCalories(prevDinnerCalories => prevDinnerCalories + [...calorieArray][i].total_calories); break; 
+            case (`snack`): console.log(`Snake! ${[...calorieArray][i].total_calories}`); setSnackCalories(prevSnackCalories => prevSnackCalories + [...calorieArray][i].total_calories); break; 
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }    
+    };
+
+    useEffect(() => {
+      fetchCaloriesForDate();
+    }, [userId])
 
     useEffect(() => {
         setCalorieCounter(breakfastCalories + lunchCalories + dinnerCalories + snackCalories) 
@@ -31,7 +74,7 @@ export default function Home() {
     }, [breakfastCalories, lunchCalories, dinnerCalories, snackCalories, calorieCounter])
 
     function changeColor() {
-      if (calorieCounter > 0 && calorieCounter <= calorieGoal / 3){
+      if (calorieCounter >= 0 && calorieCounter <= calorieGoal / 3){
           setColor("green");
       }
       else if (calorieCounter >= calorieGoal / 3 && calorieCounter < calorieGoal){
@@ -44,7 +87,10 @@ export default function Home() {
 
     function changeNumSize() {
       if(calorieCounter >= 10000){
-        setNumSize('53px');
+        setNumSize('50px');
+      }
+      else if(calorieCounter >= 1000){
+        setNumSize('58px');
       }
     }
 
@@ -138,13 +184,13 @@ export default function Home() {
         </div>
 
         <Dialog open={openMealForm} onClose={handleCloseMealForm}>
-          <AddMealForm currentMeal={meal}/>
+          <AddMealForm currentMeal={meal} fetchCaloriesForDate={fetchCaloriesForDate} />
         </Dialog>
 
         
         
 
-        <div className="pot"  onClick={handleOpenCalorieForm}>
+        <div className="pot">  {/*onClick={fetchCaloriesForDate}*/}
         <img src="/icons/pot.svg"/>
           <div className="liquid">
             <div className="calorie-counter" style={{fontSize: numSize}}>

@@ -18,5 +18,5 @@ const IntakeSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.models.User ||
+export default mongoose.models.Intake ||
   mongoose.model("Intake", IntakeSchema, "intake-db");
