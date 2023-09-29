@@ -2,6 +2,7 @@ import { Autocomplete, Backdrop, Button, Dialog, DialogActions, DialogContent, D
 import { useEffect, useState } from "react"
 import AddMealForm from "@/components/AddMealForm";
 import { useAuth } from "@clerk/nextjs";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Home() {
 
