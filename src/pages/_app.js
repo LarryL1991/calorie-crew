@@ -1,5 +1,5 @@
 // import Navbar from "@/components/Navbar";
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "../styles/Home.css";
 import "../styles/Navbar.css";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/nextjs";
