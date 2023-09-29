@@ -131,6 +131,11 @@ const AddMealForm = (props) => {
         if (props.fetchCaloriesForDate !== undefined){
           props.fetchCaloriesForDate();
         }
+
+        if (props.handleCloseMealForm !== undefined){
+          props.handleCloseMealForm();
+        }
+
       } else {
         // Handle error, e.g., show an error message
         console.error("Failed to add meal");

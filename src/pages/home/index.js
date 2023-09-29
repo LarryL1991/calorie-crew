@@ -2,6 +2,7 @@ import { Autocomplete, Backdrop, Button, Dialog, DialogActions, DialogContent, D
 import { useEffect, useState } from "react"
 import AddMealForm from "@/components/AddMealForm";
 import { useAuth } from "@clerk/nextjs";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   
@@ -184,7 +185,7 @@ export default function Home() {
         </div>
 
         <Dialog open={openMealForm} onClose={handleCloseMealForm}>
-          <AddMealForm currentMeal={meal} fetchCaloriesForDate={fetchCaloriesForDate} />
+          <AddMealForm currentMeal={meal} fetchCaloriesForDate={fetchCaloriesForDate} handleCloseMealForm={handleCloseMealForm} />
         </Dialog>
 
         
