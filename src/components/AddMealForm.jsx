@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   IconButton,
@@ -13,25 +13,40 @@ import FoodSelector from "./FoodSelector"; // Import your FoodSelector component
 import DeleteIcon from "@mui/icons-material/Delete"; // Import the delete icon
 import { useAuth } from "@clerk/nextjs";
 
-const AddMealForm = () => {
+
+const AddMealForm = (props) => {
   const [selectedFoods, setSelectedFoods] = useState([
     {
-      _id: "", // User-selected food _id
       name: "", // User-selected food
       calories: 0, // Calories for the selected food (fetched from the database)
+      measurement: "",
       quantity: 1, // Quantity set by the user (initially set to 1)
     },
   ]);
   const [selectedMealType, setSelectedMealType] = useState("");
+  const [date, setDate] = useState("1900-01-01");
 
   const { isLoaded, userId } = useAuth();
 
   const handleAddItem = () => {
     setSelectedFoods([
       ...selectedFoods,
-      { food: "", _id: "", calories: 0, quantity: 1 },
+      { name: "", calories: 0, measurement: "", quantity: 1 },
     ]);
   };
+
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+  };
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Month is zero-based
+    const day = String(currentDate.getDate()).padStart(2, "0");
+
+    setDate(`${year}-${month}-${day}`);
+  }, []);
 
   const handleRemoveItem = (index) => {
     const updatedSelectedFoods = [...selectedFoods];
@@ -42,9 +57,9 @@ const AddMealForm = () => {
   const handleFoodSelection = (food, index) => {
     const updatedSelectedFoods = [...selectedFoods];
     updatedSelectedFoods[index] = {
-      _id: food?._id || "", // Update _id if food is not null, otherwise, reset to an empty string
       name: food?.name || "", // Update name if food is not null, otherwise, reset to an empty string
       calories: food?.calories || 0, // Update calories if food is not null, otherwise, reset to 0
+      measurement: food?.measurement || "",
       quantity: 1, // Reset quantity to 1
     };
     setSelectedFoods(updatedSelectedFoods);
@@ -64,13 +79,13 @@ const AddMealForm = () => {
   };
 
   const HandleCompleteMeal = async () => {
-    const currentDate = new Date();
-
     if (!isLoaded || !userId) {
       return null;
     }
 
-    console.log(userId);
+    const formattedDate = new Date(date);
+    formattedDate.setHours(0, 0, 0, 0);
+    console.log(formattedDate.toISOString());
 
     try {
       // Calculate the total calories consumed for the meal
@@ -82,7 +97,7 @@ const AddMealForm = () => {
       // Prepare the data to send to the API
       const mealData = {
         user_id: userId,
-        date: currentDate.toISOString(), // Format the date as required
+        date,
         meal_type: selectedMealType.toLowerCase(),
         food_items: selectedFoods,
         total_calories: totalCalories,
@@ -106,8 +121,8 @@ const AddMealForm = () => {
         setSelectedFoods([
           {
             name: "",
-            _id: "",
             calories: 0,
+            measurement: "",
             quantity: 1,
           },
         ]);
@@ -124,11 +139,18 @@ const AddMealForm = () => {
   return (
     <div>
       <FormControl fullWidth>
-        <InputLabel id="meal-type-label">Meal Type</InputLabel>
+        <TextField
+          label="Date (YYYY-MM-DD)"
+          variant="outlined"
+          value={date}
+          onChange={handleDateChange}
+          fullWidth
+          required
+        />
         <Select
           labelId="meal-type-label"
           id="meal-type"
-          value={selectedMealType}
+          defaultValue={props?.currentMeal} //This now defaults to the current meal selected, ignoring this line if it's null (I believe. We just learned this and I wanted to use it)
           label="Meal Type"
           onChange={handleMealTypeChange}
         >

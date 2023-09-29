@@ -7,15 +7,15 @@ export default async function handler(req, res) {
   try {
     await dbConnect();
 
-    const oneDayMilliseconds = 24 * 60 * 60 * 1000;
+    //const oneDayMilliseconds = 24 * 60 * 60 * 1000;
 
     const theDate = new Date(date);
-    const oneDayForward = new Date(theDate.getTime() + oneDayMilliseconds);
+    //const oneDayForward = new Date(theDate.getTime() + oneDayMilliseconds);
     //console.log({ theDate, oneDayBack: oneDayForward });
 
-    const startDate = new Date(oneDayForward);
+    const startDate = new Date(theDate);
     startDate.setHours(0, 0, 0, 0); // Set the start time to 00:00:00.000
-    const endDate = new Date(oneDayForward);
+    const endDate = new Date(theDate);
     endDate.setHours(23, 59, 59, 999); // Set the end time to 23:59:59.999
 
     //console.log({ theDate, startDate, endDate });
