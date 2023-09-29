@@ -51,8 +51,10 @@ const FeatureBox = (props) => {
 const Feature = () => {
 
   const features = [
+
     {id : 1, img : "./images/1.png", title : "Dashboard", desc : "Track your breakfast,lunch, dinner, and even snack times.", link : "/"},
     {id : 2, img : "", title : "Food", desc : "FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD.", link : "/"},
+
   ];
 
   return (
