@@ -24,7 +24,7 @@ const AddMealForm = (props) => {
     },
   ]);
   const [selectedMealType, setSelectedMealType] = useState("");
-  const [date, setDate] = useState("1900-01-01");
+  const [date, setDate] = useState("1970-01-02");
 
   const { isLoaded, userId } = useAuth();
 
