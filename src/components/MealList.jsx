@@ -96,8 +96,8 @@ const MealList = () => {
                       <ul>
                         {meal.food_items.map((food) => (
                           <li key={food._id}>
-                            {food.name} x {food.quantity} - {food.calories}{" "}
-                            calories
+                            {food.name} x {food.quantity} {food.measurement} -{" "}
+                            {food.calories} calories
                           </li>
                         ))}
                       </ul>
