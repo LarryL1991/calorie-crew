@@ -13,6 +13,7 @@ export async function getServerSideProps(context) { //Allows slug to persist on 
 export default function Home() {
   const router = useRouter()
   const {id} = router.query;
+  
 
   const [date, setDate] = useState("2023-09-28"); // State for date input
 

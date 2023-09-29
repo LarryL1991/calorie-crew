@@ -2,9 +2,9 @@ import { Autocomplete, Backdrop, Button, Dialog, DialogActions, DialogContent, D
 import { useEffect, useState } from "react"
 import AddMealForm from "@/components/AddMealForm";
 import { useAuth } from "@clerk/nextjs";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Home() {
+  
 
     const {userId} = useAuth();
 
@@ -23,14 +23,24 @@ export default function Home() {
     const [calorieGoal, setCalorieGoal] = useState(2000);
 
     const options = ['Breakfast', 'Lunch', 'Dinner', 'Snack']
-
     const [date, setDate] = useState("2023-09-28"); // State for date input
+    const dateObject = new Date();
+    dateObject.setUTCHours(0, 0, 0, 0)
+    console.log(dateObject.toISOString());
+    
+
+    // const currentMonth = dateObject.getMonth()+1;
+    // const currentYear = dateObject.getFullYear();
+    // const currentDate = dateObject.getDate();
+    // const dateString = (currentMonth + "-" + currentDate + "-" + currentYear);
   
     async function fetchCaloriesForDate() {
+
+      setCalorieCounter(0); setBreakfastCalories(0); setLunchCalories(0); setDinnerCalories(0); setSnackCalories(0);
+
       try {
         // Make an API request to fetch meals for the specified userId and date
-        console.log(date);
-          const response = await fetch(`/api/home/${userId}/${date}`);
+          const response = await fetch(`/api/home/${userId}/${dateObject}`);
           const data = await response.json();
         
         const calorieObject = Object.values(data)
@@ -172,7 +182,7 @@ export default function Home() {
         </div>
 
         <Dialog open={openMealForm} onClose={handleCloseMealForm}>
-          <AddMealForm currentMeal={meal}/>
+          <AddMealForm currentMeal={meal} fetchCaloriesForDate={fetchCaloriesForDate} />
         </Dialog>
 
         
