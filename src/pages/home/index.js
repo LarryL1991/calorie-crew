@@ -100,8 +100,10 @@ export default function Home() {
 
     return (
     <>
+        <Navbar/>
         <div>
           <Dialog open={openCalorieForm} onClose={handleCloseCalorieForm}>
+
             <DialogTitle>Add Calories</DialogTitle>
             <DialogContent>
               <DialogContentText sx={{marginBottom: "10px"}}>
