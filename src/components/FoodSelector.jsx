@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { TextField, Autocomplete, CircularProgress } from "@mui/material";
 
-const FoodSelector = ({ onFoodSelect }) => {
+const FoodSelector = ({ onFoodSelect, disabled }) => {
   const [query, setQuery] = useState("");
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -50,11 +50,12 @@ const FoodSelector = ({ onFoodSelect }) => {
     <Autocomplete
       id="food-search"
       options={options}
+      disabled={disabled}
       getOptionLabel={(option) => `${option.name} - ${option.measurement}`}
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Add an item to your meal..."
+          label="Select from pre-defined options"
           variant="outlined"
           onChange={(e) => setQuery(e.target.value)}
           fullWidth

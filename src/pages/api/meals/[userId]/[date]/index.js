@@ -1,5 +1,5 @@
-import dbConnect from "../../../../server/db";
-import mealSchema from "../../../../models/Meal";
+import dbConnect from "../../../../../server/db";
+import mealSchema from "../../../../../models/Meal";
 
 export default async function handler(req, res) {
   const { userId, date } = req.query;
