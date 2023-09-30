@@ -279,6 +279,58 @@ const AddMealForm = ({ closeDialog, currentMeal }) => {
     }
   };
 
+  const handleDelete = async () => {
+    if (!isLoaded || !userId || !selectedMealType || dateError) {
+      return; // Prevent submission if the conditions are not met
+    }
+
+    const formattedDate = new Date(date);
+    formattedDate.setHours(0, 0, 0, 0);
+
+    try {
+      // Calculate the total calories consumed for the meal
+      const totalCalories = selectedFoods.reduce(
+        (total, food) => total + food.calories * food.quantity,
+        0
+      );
+
+      // Prepare the data to send to the API
+      const mealData = {
+        user_id: userId,
+        date,
+        meal_type: selectedMealType.toLowerCase(),
+        food_items: selectedFoods,
+        total_calories: totalCalories,
+      };
+
+      console.log(mealData);
+
+      // Send a PUT request to your API endpoint
+      const response = await fetch(
+        `/api/deleteMeal/${userId}/${date}/${selectedMealType.toLowerCase()}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(mealData),
+        }
+      );
+
+      if (response.ok) {
+        // Handle success, e.g., show a success message
+        console.log("Meal deleted successfully!");
+        setOldSelectedFoods(selectedFoods);
+        closeDialog();
+      } else {
+        // Handle error, e.g., show an error message
+        console.error("Failed to delete meal");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div>
       <Paper
@@ -388,13 +440,18 @@ const AddMealForm = ({ closeDialog, currentMeal }) => {
           </Button>
         )}
         {isDataFetched && (
-          <Button
-            variant="outlined"
-            onClick={handleUpdateMeal}
-            disabled={isFormChanged}
-          >
-            Update Meal
-          </Button>
+          <>
+            <Button
+              variant="outlined"
+              onClick={handleUpdateMeal}
+              disabled={isFormChanged}
+            >
+              Update Meal
+            </Button>
+            <Button variant="outlined" color="error" onClick={handleDelete}>
+              Delete
+            </Button>
+          </>
         )}
       </div>
     </div>

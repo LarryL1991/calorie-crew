@@ -13,7 +13,6 @@ export default async function handler(req, res) {
     // Extract relevant data from the request body
     const { user_id, date, meal_type, food_items, total_calories } = req.body;
 
-    console.log(food_items);
     // Search for the existing meal based on user_id, date, and meal_type
     const existingMeal = await Meal.findOne({
       user_id,
