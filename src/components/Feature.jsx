@@ -52,8 +52,8 @@ const Feature = () => {
 
   const features = [
 
-    {id : 1, img : "./images/1.png", title : "Dashboard", desc : "Track your breakfast,lunch, dinner, and even snack times.", link : "/"},
-    {id : 2, img : "", title : "Food", desc : "FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD FOOD.", link : "/"},
+    {id : 1, img : "./images/1.png", title : "Dashboard", desc : "Displays total calories consumed from different meals.", link : "/"},
+    {id : 2, img : "./images/2.png", title : "Meal form", desc : "Add specific food and its calories to dashboard.", link : "/"},
 
   ];
 
