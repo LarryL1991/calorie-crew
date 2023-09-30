@@ -14,7 +14,7 @@ import FoodSelector from "./FoodSelector"; // Import your FoodSelector component
 import DeleteIcon from "@mui/icons-material/Delete"; // Import the delete icon
 import { useAuth } from "@clerk/nextjs";
 
-const AddMealForm = () => {
+const AddMealForm = ({ closeDialog, currentMeal }) => {
   const [selectedFoods, setSelectedFoods] = useState([
     {
       name: "", // User-selected food
@@ -32,9 +32,9 @@ const AddMealForm = () => {
     },
   ]);
 
-  const [selectedMealType, setSelectedMealType] = useState("");
+  const [selectedMealType, setSelectedMealType] = useState(currentMeal);
 
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState("1900-01-01");
   const [dateError, setDateError] = useState(null); // Added dateError state
   const [isValidInput, setIsValidInput] = useState(true); // Flag for valid input
   const [isFormChanged, setIsFormChanged] = useState(false);
@@ -70,6 +70,7 @@ const AddMealForm = () => {
       name: food?.name || "", // Update name if food is not null, otherwise, reset to an empty string
       calories: food?.calories || 0, // Update calories if food is not null, otherwise, reset to 0
       measurement: food?.measurement || "",
+      quantity: selectedFoods[index].quantity,
     };
     setSelectedFoods(updatedSelectedFoods);
   };
@@ -215,6 +216,7 @@ const AddMealForm = () => {
       if (response.ok) {
         // Handle success, e.g., show a success message
         console.log("Meal added successfully!");
+        closeDialog();
       } else {
         // Handle error, e.g., show an error message
         console.error("Failed to add meal");
@@ -249,7 +251,7 @@ const AddMealForm = () => {
         total_calories: totalCalories,
       };
 
-      //console.log(mealData);
+      console.log(mealData);
 
       // Send a PUT request to your API endpoint
       const response = await fetch(
@@ -267,6 +269,7 @@ const AddMealForm = () => {
         // Handle success, e.g., show a success message
         console.log("Meal updated successfully!");
         setOldSelectedFoods(selectedFoods);
+        closeDialog();
       } else {
         // Handle error, e.g., show an error message
         console.error("Failed to update meal");
@@ -297,7 +300,7 @@ const AddMealForm = () => {
           <Select
             labelId="meal-type-label"
             id="meal-type"
-            value={selectedMealType}
+            defaultValue={currentMeal}
             label="Meal Type"
             onChange={handleMealTypeChange}
           >

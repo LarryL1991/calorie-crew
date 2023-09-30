@@ -1,15 +1,15 @@
 import Navbar from "@/components/Navbar";
+import WeeklyDisplay from "@/components/WeeklyDisplay";
 
 function history() {
-    return (
+  return (
     <div>
-    <Navbar/>   
-    <h1>Calorie history</h1>
-
-
-    </div>    
- 
-    )
+      <Navbar />
+      <div>
+        <WeeklyDisplay onRefreshData={true} />
+      </div>
+    </div>
+  );
 }
 
 export default history;
