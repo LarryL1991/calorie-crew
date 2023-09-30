@@ -64,7 +64,7 @@ export default function Home() {
 
       const calorieArray = [...calorieObject[0]];
 
-      //console.log(calorieArray);
+      console.log(calorieArray);
 
       for (let i = 0; i < [...calorieArray].length; i++) {
         //console.log([...calorieArray][i].meal_type)
@@ -72,29 +72,25 @@ export default function Home() {
           case `breakfast`:
             //console.log(`Brekky! ${[...calorieArray][i].total_calories}`);
             setBreakfastCalories(
-              (prevBreakfastCalories) =>
-                prevBreakfastCalories + [...calorieArray][i].total_calories
+              [...calorieArray][i].total_calories
             );
             break;
           case `lunch`:
             //console.log(`Lonche! ${[...calorieArray][i].total_calories}`);
             setLunchCalories(
-              (prevLunchCalories) =>
-                prevLunchCalories + [...calorieArray][i].total_calories
+              [...calorieArray][i].total_calories
             );
             break;
           case `dinner`:
             //console.log(`Din-din! ${[...calorieArray][i].total_calories}`);
             setDinnerCalories(
-              (prevDinnerCalories) =>
-                prevDinnerCalories + [...calorieArray][i].total_calories
+              [...calorieArray][i].total_calories
             );
             break;
           case `snack`:
             //console.log(`Snake! ${[...calorieArray][i].total_calories}`);
             setSnackCalories(
-              (prevSnackCalories) =>
-                prevSnackCalories + [...calorieArray][i].total_calories
+              [...calorieArray][i].total_calories
             );
             break;
         }
@@ -105,7 +101,9 @@ export default function Home() {
   }
 
   useEffect(() => {
+    if(userId){
     fetchCaloriesForDate();
+    }
   }, [userId]);
 
   useEffect(() => {
