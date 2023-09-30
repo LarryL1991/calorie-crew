@@ -41,6 +41,7 @@ const AddMealForm = ({ closeDialog, currentMeal }) => {
   const [isDataFetched, setIsDataFetched] = useState(false);
   const [isCompleteMealDisabled, setIsCompleteMealDisabled] = useState(true);
   const { isLoaded, userId } = useAuth();
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   const handleAddItem = () => {
     setSelectedFoods([
@@ -56,6 +57,7 @@ const AddMealForm = ({ closeDialog, currentMeal }) => {
     const day = String(currentDate.getDate()).padStart(2, "0");
 
     setDate(`${year}-${month}-${day}`);
+    setIsFormOpen(!isFormOpen);
   }, []);
 
   const handleRemoveItem = (index) => {
@@ -102,7 +104,7 @@ const AddMealForm = ({ closeDialog, currentMeal }) => {
       ]);
       fetchMeal();
     }
-  }, [selectedMealType, date]);
+  }, [selectedMealType, date, isFormOpen]);
 
   useEffect(() => {
     setIsFormChanged(
